@@ -321,16 +321,6 @@
     }
   }
 
-  /* ---------- Yazı: başlık bağlantıları ---------- */
-  document.querySelectorAll(".prose h2[id], .prose h3[id]").forEach(function (hd) {
-    var a = document.createElement("a");
-    a.className = "anchor";
-    a.href = "#" + hd.id;
-    a.textContent = "#";
-    a.setAttribute("aria-label", "Link to this section: " + hd.textContent);
-    hd.insertBefore(a, hd.firstChild);
-  });
-
   /* ---------- Yazı: okuma ilerlemesi ---------- */
   var readbar = document.querySelector(".readbar span");
   var article = document.querySelector(".post .prose");

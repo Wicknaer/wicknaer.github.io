@@ -383,11 +383,11 @@ a.chip:hover { color: var(--white); border-color: var(--red); }
 .toc-m .toc__list { margin: 0 16px 14px; }
 
 /* Başlık bağlantıları */
-.prose h2, .prose h3 { position: relative; }
-.prose .anchor { color: var(--red); text-decoration: none; font-weight: 500; margin-right: .35em; }
-.prose h3 .anchor { position: absolute; left: -1.1em; margin: 0; opacity: 0; transition: opacity .15s; }
-.prose h3:hover .anchor, .prose h3 .anchor:focus-visible { opacity: 1; }
-.prose .anchor:hover { color: var(--red-hi); }
+/* H2 önünde eğik kırmızı çubuk (butonlardaki kesik köşe diline uyumlu) */
+.prose h2::before {
+  content: ""; display: inline-block; width: 5px; height: .72em; margin-right: .5em;
+  background: var(--red); transform: skewX(-16deg); box-shadow: 0 0 14px rgba(229,36,63,.45);
+}
 
 /* Görseller: açıklama + büyütme */
 .prose figure.shot { margin: 1.6em 0; }

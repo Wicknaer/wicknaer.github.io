@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About
+title: About Me
 description: I work on cyber security and document my findings in technical write-ups.
 permalink: /about/
 ---
