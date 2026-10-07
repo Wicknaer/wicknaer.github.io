@@ -1,1 +1,1 @@
-# 0xW1CK: Cyber Security Blog
+# 0xWICKNAER: Cyber Security Blog
