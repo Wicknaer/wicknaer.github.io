@@ -3,9 +3,16 @@
   "use strict";
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------- Hero: kırmızı kıvılcımlar ---------- */
-  var canvas = document.querySelector(".hero__embers");
-  if (canvas && canvas.getContext) {
+  /* ---------- Hero arka planı ----------
+     <canvas data-effect="decrypt"> → farenin çevresinde payload çözülen hex dökümü
+     <canvas data-effect="embers">  → eski kırmızı kıvılcımlar */
+  var heroCanvas = document.querySelector(".hero__embers");
+  if (heroCanvas && heroCanvas.getContext) {
+    if (heroCanvas.dataset.effect === "embers") embers(heroCanvas);
+    else decrypt(heroCanvas);
+  }
+
+  function embers(canvas) {
     var ctx = canvas.getContext("2d");
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var w = 0, h = 0, embers = [];
@@ -94,6 +101,149 @@
     }
     var t;
     window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(function () { init(); if (!running) draw(); }, 150); });
+  }
+
+  function decrypt(canvas) {
+    var ctx = canvas.getContext("2d");
+    var hero = canvas.parentElement;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var FONT = 13, CW, LH = 19, R = 150;           // yazı boyu, hücre genişliği, satır yüksekliği, açılma yarıçapı
+    var HEX = "0123456789abcdef";
+    var SCRAMBLE = "!<>-_\\/[]{}=+*^?#$%&@01";
+    // Açığa çıkan payloadlar ve renkleri (kırmızı: injection, yeşil: komut/dizin, mavi: diğer)
+    var RED = "255,77,99", GREEN = "43,212,125", BLUE = "127,178,255";
+    var TOKENS = [
+      ["' OR 1=1--", RED], ["../../../etc/passwd", GREEN], ["<script>alert(1)</script>", RED],
+      ["; cat /etc/passwd", GREEN], ["{{7*7}}", BLUE], ["admin'--", RED],
+      ["UNION SELECT username,password FROM users--", RED], ["file:///etc/passwd", GREEN],
+      ["| whoami", GREEN], ["<img src=x onerror=alert(1)>", RED], ["%2e%2e%2f", GREEN],
+      ["' AND SLEEP(5)--", RED], ["http://169.254.169.254/latest/meta-data/", BLUE],
+      ["<!ENTITY xxe SYSTEM \"file:///etc/passwd\">", BLUE], ["$(id)", GREEN],
+      ["X-Forwarded-For: 127.0.0.1", BLUE], ["learn", BLUE], ["break", RED], ["write", GREEN]
+    ];
+    var w, h, cols, rows, hidden, hiddenColor, base, baseCtx, cells;
+    var mouse = { x: -9999, y: -9999, last: 0 };
+    var probe = { x: 0, y: 0 };
+    var running = false, lastFrame = 0;
+
+    function rnd(str) { return str[(Math.random() * str.length) | 0]; }
+
+    function setup() {
+      var r = canvas.getBoundingClientRect();
+      w = r.width; h = r.height;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.font = FONT + 'px "JetBrains Mono", ui-monospace, monospace';
+      ctx.textBaseline = "top";
+      CW = Math.ceil(ctx.measureText("0").width + 1);
+      cols = Math.ceil(w / CW); rows = Math.ceil(h / LH);
+      // Gizli katman: her satır karışık payloadlardan oluşur
+      hidden = []; hiddenColor = [];
+      for (var y = 0; y < rows; y++) {
+        var line = "", colors = [];
+        while (line.length < cols + 40) {
+          var t = TOKENS[(Math.random() * TOKENS.length) | 0];
+          for (var k = 0; k < t[0].length; k++) colors.push(t[1]);
+          line += t[0];
+          var gap = 3 + ((Math.random() * 4) | 0);
+          for (k = 0; k < gap; k++) colors.push(null);
+          line += new Array(gap + 1).join(" ");
+        }
+        var off = (Math.random() * 30) | 0;
+        hidden.push(line.slice(off, off + cols));
+        hiddenColor.push(colors.slice(off, off + cols));
+      }
+      // Soluk hex zemini bir kez ayrı bir tuvale çiz
+      base = document.createElement("canvas");
+      base.width = canvas.width; base.height = canvas.height;
+      baseCtx = base.getContext("2d");
+      baseCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      baseCtx.font = ctx.font; baseCtx.textBaseline = "top";
+      baseCtx.fillStyle = "rgba(140,148,168,0.09)";
+      for (y = 0; y < rows; y++) for (var x = 0; x < cols; x++) baseCtx.fillText(rnd(HEX), x * CW, y * LH);
+      cells = new Map();   // açık hücreler: indeks → {v: görünürlük, until: karışma bitişi}
+    }
+
+    // Zeminde her karede birkaç karakteri değiştir (yaşayan bir döküm hissi)
+    function mutateBase() {
+      for (var i = 0; i < 24; i++) {
+        var x = (Math.random() * cols) | 0, y = (Math.random() * rows) | 0;
+        baseCtx.clearRect(x * CW, y * LH, CW, LH);
+        baseCtx.fillText(rnd(HEX), x * CW, y * LH);
+      }
+    }
+
+    function focusPoint(now) {
+      // Fare yakın zamanda hareket ettiyse onu, yoksa kendi kendine dolaşan sondayı kullan
+      if (now - mouse.last < 2500) return mouse;
+      var t = now / 1000;
+      probe.x = w * (0.5 + 0.38 * Math.sin(t * 0.33) * Math.cos(t * 0.11));
+      probe.y = h * (0.5 + 0.36 * Math.sin(t * 0.21 + 1.3));
+      return probe;
+    }
+
+    function frame(now) {
+      if (!running) return;
+      requestAnimationFrame(frame);
+      if (now - lastFrame < 33) return;        // ~30 fps yeterli
+      lastFrame = now;
+      mutateBase();
+      var p = focusPoint(now);
+      // Odak çevresindeki hücreleri aç
+      var c0 = Math.max(0, ((p.x - R) / CW) | 0), c1 = Math.min(cols - 1, ((p.x + R) / CW) | 0);
+      var r0 = Math.max(0, ((p.y - R) / LH) | 0), r1 = Math.min(rows - 1, ((p.y + R) / LH) | 0);
+      for (var y = r0; y <= r1; y++) {
+        for (var x = c0; x <= c1; x++) {
+          if (!hiddenColor[y][x]) continue;
+          var dx = x * CW + CW / 2 - p.x, dy = y * LH + LH / 2 - p.y;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if (d > R) continue;
+          var idx = y * cols + x, c = cells.get(idx);
+          if (!c) { c = { v: 0, until: now + 120 + Math.random() * 380 }; cells.set(idx, c); }
+          c.t = 1 - d / R;
+          c.seen = now;
+        }
+      }
+      ctx.clearRect(0, 0, w, h);
+      ctx.drawImage(base, 0, 0, w, h);
+      cells.forEach(function (c, idx) {
+        if (c.seen === now) c.v += (c.t - c.v) * 0.25;   // odaktaysa belir
+        else c.v *= 0.93;                               // değilse yavaşça sön
+        if (c.v < 0.02) { cells.delete(idx); return; }
+        var x = idx % cols, y = (idx / cols) | 0;
+        var scrambling = now < c.until;
+        var ch = scrambling ? rnd(SCRAMBLE) : hidden[y][x];
+        var col = scrambling ? "200,205,220" : hiddenColor[y][x];
+        ctx.clearRect(x * CW, y * LH, CW, LH);
+        ctx.fillStyle = "rgba(" + col + "," + Math.min(0.75, c.v * 0.9).toFixed(3) + ")";
+        ctx.fillText(ch, x * CW, y * LH);
+      });
+    }
+
+    function still() { ctx.clearRect(0, 0, w, h); ctx.drawImage(base, 0, 0, w, h); }
+
+    setup();
+    if (reduceMotion) {
+      still();                                          // hareketsiz: yalnızca soluk döküm
+    } else {
+      hero.addEventListener("pointermove", function (e) {
+        var r = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.last = performance.now();
+      });
+      hero.addEventListener("pointerleave", function () { mouse.last = 0; });
+      new IntersectionObserver(function (entries) {
+        var vis = entries[0].isIntersecting;
+        if (vis && !running) { running = true; requestAnimationFrame(frame); }
+        else if (!vis) running = false;
+      }).observe(canvas);
+    }
+    var t;
+    window.addEventListener("resize", function () {
+      clearTimeout(t);
+      t = setTimeout(function () { setup(); if (reduceMotion) still(); }, 150);
+    });
+    // Yazı tipi geç yüklenirse hücre ölçülerini yeniden hesapla
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { setup(); if (reduceMotion) still(); });
   }
 
   /* ---------- Hero: etkileşimli terminal ---------- */
