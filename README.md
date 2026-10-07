@@ -1,4 +1,4 @@
-# 0xBahadir: Web Security Blog
+# 0xW1CK: Web Security Blog
 
 Kırmızı, lacivert ve gri tonlarda, sıfırdan yazılmış bir Jekyll blogu. GitHub Pages üzerinde ücretsiz çalışır. Yazılar Markdown ile yazılır.
 
