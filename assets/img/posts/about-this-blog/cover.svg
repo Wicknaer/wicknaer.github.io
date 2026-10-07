@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Temsili kapak görseli: kendi görselinle değiştirebilirsin (önerilen boyut 1200x630) -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a0f22"/>
+      <stop offset=".55" stop-color="#0A0F1E"/>
+      <stop offset="1" stop-color="#0A0F1E"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".78" cy=".3" r=".55">
+      <stop offset="0" stop-color="#5E0E24" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#5E0E24" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#25304D" stroke-width="1" opacity=".45"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- terminal penceresi -->
+  <g transform="translate(560 120)">
+    <rect width="560" height="360" rx="14" fill="#121A2E" fill-opacity=".92" stroke="#4a2236"/>
+    <rect width="560" height="44" rx="14" fill="#0A0F1E" fill-opacity=".8"/>
+    <rect y="30" width="560" height="14" fill="#0A0F1E" fill-opacity=".8"/>
+    <circle cx="24" cy="22" r="6" fill="#E5243F"/>
+    <circle cx="44" cy="22" r="6" fill="#25304D"/>
+    <circle cx="64" cy="22" r="6" fill="#25304D"/>
+    <g font-family="JetBrains Mono, Consolas, monospace" font-size="20">
+      <text x="28" y="96" fill="#E5243F">$</text><text x="52" y="96" fill="#F4F6FA">cat scope.md</text>
+      <text x="52" y="132" fill="#8C94A8">recon → exploit → root cause</text>
+      <text x="52" y="164" fill="#8C94A8">→ mitigation</text>
+      <text x="28" y="220" fill="#E5243F">$</text><text x="52" y="220" fill="#F4F6FA">grep -c labs writeups/</text>
+      <text x="52" y="256" fill="#8C94A8">18</text>
+      <text x="28" y="312" fill="#E5243F">$</text>
+      <rect x="52" y="294" width="12" height="24" fill="#E5243F"/>
+    </g>
+  </g>
+
+  <!-- başlık -->
+  <g font-family="Chakra Petch, Segoe UI, sans-serif" font-weight="700">
+    <text x="80" y="250" font-size="30" fill="#FF4D63" font-family="JetBrains Mono, Consolas, monospace" font-weight="600">&gt;_ 0xW1CK</text>
+    <text x="80" y="330" font-size="64" fill="#F4F6FA">About</text>
+    <text x="80" y="400" font-size="64" fill="#F4F6FA">this blog</text>
+    <rect x="80" y="430" width="120" height="5" fill="#E5243F"/>
+  </g>
+</svg>

@@ -1,15 +1,14 @@
-<a class="skip" href="#main">İçeriğe geç</a>
+<a class="skip" href="#main">Skip to content</a>
 <header class="nav">
   <div class="nav__inner">
-    <a class="nav__brand" href="{{ '/' | relative_url }}" aria-label="Ana sayfa">
+    <a class="nav__brand" href="{{ '/' | relative_url }}" aria-label="Home">
       <span class="nav__prompt">&gt;_</span>{{ site.title }}
     </a>
-    <nav aria-label="Ana menü">
+    <nav aria-label="Main menu">
       <ul class="nav__links">
         {% assign path = page.url %}
-        <li><a href="{{ '/blog/' | relative_url }}" {% if path contains '/blog/' %}aria-current="page"{% endif %}>Yazılar</a></li>
-        <li><a href="{{ '/yol-haritasi/' | relative_url }}" {% if path == '/yol-haritasi/' %}aria-current="page"{% endif %}>Yol haritası</a></li>
-        <li><a href="{{ '/hakkimda/' | relative_url }}" {% if path == '/hakkimda/' %}aria-current="page"{% endif %}>Hakkımda</a></li>
+        <li><a href="{{ '/blog/' | relative_url }}" {% if path contains '/blog/' %}aria-current="page"{% endif %}>Posts</a></li>
+        <li><a href="{{ '/about/' | relative_url }}" {% if path == '/about/' %}aria-current="page"{% endif %}>About</a></li>
       </ul>
     </nav>
   </div>

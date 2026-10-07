@@ -1,17 +1,18 @@
 ---
 layout: page
-title: Yazılar
-description: Çözdüğüm lablar, yöntemlerim ve aldığım notlar. Konuya göre süz ya da ara.
+title: Posts
+description: Lab writeups, vulnerability analyses and technical notes. Filter by category or search.
 permalink: /blog/
 ---
 <div class="filter">
   <label class="filter__search">
-    <span class="sr-only">Yazılarda ara</span>
+    <span class="sr-only">Search posts</span>
     <span class="filter__ps" aria-hidden="true">grep -i</span>
     <input type="search" id="q" placeholder="path traversal, burp, ssrf…" autocomplete="off">
+    <kbd class="filter__key" aria-hidden="true" title="Press / to search">/</kbd>
   </label>
-  <div class="filter__chips" role="group" aria-label="Kategoriye göre süz">
-    <button class="chip-btn" aria-pressed="true" data-cat="">Tümü <span>{{ site.posts | size }}</span></button>
+  <div class="filter__chips" role="group" aria-label="Filter by category">
+    <button class="chip-btn" aria-pressed="true" data-cat="">All <span>{{ site.posts | size }}</span></button>
     {% assign cats = site.categories | sort %}
     {% for c in cats %}
     <button class="chip-btn" aria-pressed="false" data-cat="{{ c[0] | downcase }}">{{ c[0] }} <span>{{ c[1] | size }}</span></button>
@@ -30,4 +31,4 @@ permalink: /blog/
   </ol>
 </section>
 {% endfor %}
-<p class="rows__empty" id="no-results" hidden>Eşleşen yazı yok. Başka bir kelime dene ya da filtreyi kaldır.</p>
+<p class="rows__empty" id="no-results" hidden>No matching posts. Try a different keyword or clear the filter.</p>

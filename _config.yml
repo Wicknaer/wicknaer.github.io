@@ -2,22 +2,27 @@
 title: "0xW1CK"
 handle: "Bahadır Şahin"                       
 author: "Bahadır Şahin"
-description: "Web güvenliği yolculuğu: Siber Güvenlik lab çözümleri, notlar ve öğrendiklerim."
-tagline: "Web security learner. Lab çöz, anla, yaz."
+description: "Lab writeups, vulnerability analyses and technical notes on web application security."
+tagline: "Web application security · writeups & research notes"
 
 url: "https://wicknaer.github.io"
 baseurl: ""
 
-lang: tr
+lang: en
 timezone: Europe/Istanbul
 
 social:
-  github: "https://github.com/wicknaer"
   linkedin: "https://www.linkedin.com/in/bahadir06sahin"
-  tryhackme: "https://tryhackme.com/p/KULLANICIADI"
   hackthebox: ""                         
 
 permalink: /blog/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
 
 markdown: kramdown
 highlighter: rouge

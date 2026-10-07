@@ -1,47 +1,101 @@
 ---
 layout: default
 ---
-{% assign words = content | number_of_words %}
-{% assign minutes = words | divided_by: 180 | plus: 1 %}
+{% assign words = content | strip_html | number_of_words %}
+{% assign minutes = words | divided_by: 200 | plus: 1 %}
+<div class="readbar" aria-hidden="true"><span></span></div>
 <article class="post">
   <header class="post__head">
     <div class="wrap wrap--post">
       <p class="post__crumb">
-        <a href="{{ '/blog/' | relative_url }}">Yazılar</a>
-        {% for c in page.categories %}<span class="chip{% if forloop.first %} chip--red{% endif %}">{{ c }}</span>{% endfor %}
+        <a href="{{ '/blog/' | relative_url }}">Posts</a>
+        {% for c in page.categories %}<a class="chip{% if forloop.first %} chip--red{% endif %}" href="{{ '/blog/' | relative_url }}?cat={{ c | downcase | uri_escape }}">{{ c }}</a>{% endfor %}
       </p>
       <h1 class="post__title">{{ page.title }}</h1>
       {% if page.description %}<p class="post__lead">{{ page.description }}</p>{% endif %}
       <dl class="post__meta">
-        <div><dt>Tarih</dt><dd><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%d.%m.%Y' }}</time></dd></div>
-        <div><dt>Okuma</dt><dd>{{ minutes }} dk</dd></div>
+        <div><dt>Author</dt><dd>{{ page.author | default: site.author }}</dd></div>
+        <div><dt>Published</dt><dd><time datetime="{{ page.date | date_to_xmlschema }}">{% include date.html date=page.date %}</time></dd></div>
+        {% if page.last_modified_at %}<div><dt>Updated</dt><dd><time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{% include date.html date=page.last_modified_at %}</time></dd></div>{% endif %}
+        <div><dt>Reading time</dt><dd>{{ minutes }} min</dd></div>
         {% if page.platform %}<div><dt>Platform</dt><dd>{{ page.platform }}</dd></div>{% endif %}
-        {% if page.difficulty %}<div><dt>Seviye</dt><dd class="lvl lvl--{{ page.difficulty | downcase }}">{{ page.difficulty }}</dd></div>{% endif %}
+        {% if page.difficulty %}<div><dt>Level</dt><dd class="lvl lvl--{{ page.difficulty | downcase }}">{{ page.difficulty }}</dd></div>{% endif %}
       </dl>
+      {% assign cover = page.image.path | default: page.image %}
+      {% if cover %}
+      <figure class="post__cover">
+        <img src="{{ cover | relative_url }}" alt="{{ page.image.alt | default: '' | escape }}" width="1200" height="630" fetchpriority="high">
+      </figure>
+      {% endif %}
     </div>
   </header>
 
-  <div class="wrap wrap--post post__grid">
-    <aside class="toc" aria-label="İçindekiler">
-      <p class="toc__title">İçindekiler</p>
+  <div class="post__grid">
+    <aside class="toc" aria-label="Table of contents">
+      <p class="toc__title">Contents</p>
       <ol class="toc__list"></ol>
     </aside>
-    <div class="prose">
-      {{ content }}
+    <div class="post__body">
+      <details class="toc-m">
+        <summary>Contents</summary>
+        <ol class="toc__list"></ol>
+      </details>
+      <div class="prose">
+        {{ content }}
+      </div>
     </div>
   </div>
 
   <footer class="wrap wrap--post post__foot">
-    {% if page.tags.size > 0 %}
-    <p class="post__tags">{% for t in page.tags %}<span class="tag">#{{ t }}</span>{% endfor %}</p>
+    <div class="post__end">
+      {% if page.tags.size > 0 %}
+      <ul class="post__tags" aria-label="Tags">
+        {% for t in page.tags %}<li><a class="tag" href="{{ '/blog/' | relative_url }}?q={{ t | uri_escape }}">#{{ t }}</a></li>{% endfor %}
+      </ul>
+      {% endif %}
+      {% assign share_url = page.url | absolute_url | uri_escape %}
+      <div class="share">
+        <span class="share__label">Share</span>
+        <button type="button" class="share__btn" data-copy-link>Copy link</button>
+        <a class="share__btn" href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="share__btn" href="https://x.com/intent/post?url={{ share_url }}&amp;text={{ page.title | uri_escape }}" target="_blank" rel="noopener">X</a>
+      </div>
+    </div>
+
+    {% assign related = "" | split: "" %}
+    {% for p in site.posts %}
+      {% if p.url != page.url %}
+        {% assign hit = false %}
+        {% for c in p.categories %}{% if page.categories contains c %}{% assign hit = true %}{% endif %}{% endfor %}
+        {% for t in p.tags %}{% if page.tags contains t %}{% assign hit = true %}{% endif %}{% endfor %}
+        {% if hit %}{% assign related = related | push: p %}{% endif %}
+      {% endif %}
+    {% endfor %}
+    {% if related.size > 0 %}
+    <section class="related" aria-labelledby="related-title">
+      <h2 class="related__title" id="related-title">Related posts</h2>
+      <ul class="related__list">
+        {% for p in related limit:3 %}
+        <li>
+          <a class="related__item" href="{{ p.url | relative_url }}">
+            <span class="related__date">{% include date.html date=p.date %}</span>
+            <span class="related__name">{{ p.title }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
     {% endif %}
-    <nav class="pager" aria-label="Diğer yazılar">
+
+    {% if page.previous or page.next %}
+    <nav class="pager" aria-label="More posts">
       {% if page.previous %}
-      <a class="pager__item" href="{{ page.previous.url | relative_url }}"><span>Önceki</span>{{ page.previous.title }}</a>
+      <a class="pager__item" href="{{ page.previous.url | relative_url }}"><span>← Previous post</span>{{ page.previous.title }}</a>
       {% else %}<span></span>{% endif %}
       {% if page.next %}
-      <a class="pager__item pager__item--next" href="{{ page.next.url | relative_url }}"><span>Sonraki</span>{{ page.next.title }}</a>
+      <a class="pager__item pager__item--next" href="{{ page.next.url | relative_url }}"><span>Next post →</span>{{ page.next.title }}</a>
       {% endif %}
     </nav>
+    {% endif %}
   </footer>
 </article>

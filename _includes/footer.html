@@ -1,11 +1,10 @@
 <footer class="foot">
   <div class="foot__inner">
-    <p class="foot__line"><span class="foot__prompt">{{ site.handle }}@web:~$</span> echo "Sadece yetkili ortamlarda test et."</p>
+    <p class="foot__line"><span class="foot__prompt">guest@{{ site.title | downcase }}:~$</span> echo "Only test where you are authorized."</p>
     <ul class="foot__links">
       {% for s in site.social %}{% if s[1] != "" %}
       <li><a href="{{ s[1] }}" rel="me noopener" target="_blank">{% case s[0] %}{% when 'github' %}GitHub{% when 'linkedin' %}LinkedIn{% when 'tryhackme' %}TryHackMe{% when 'hackthebox' %}HackTheBox{% else %}{{ s[0] }}{% endcase %}</a></li>
       {% endif %}{% endfor %}
-      <li><a href="{{ '/feed.xml' | relative_url }}">RSS</a></li>
     </ul>
     <p class="foot__copy">© {{ site.time | date: '%Y' }} {{ site.author }}</p>
   </div>

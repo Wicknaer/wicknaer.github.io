@@ -1,13 +1,24 @@
 {% assign p = include.post %}
+{% assign p_img = p.image.path | default: p.image %}
+{% assign p_minutes = p.content | strip_html | number_of_words | divided_by: 200 | plus: 1 %}
 <li class="row" data-title="{{ p.title | downcase | escape }} {{ p.tags | join: ' ' | downcase }}" data-cats="{{ p.categories | join: '|' | downcase }}">
   <a class="row__link" href="{{ p.url | relative_url }}">
-    <time class="row__date" datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: '%d.%m.%Y' }}</time>
+    <span class="row__thumb">
+      {% if p_img %}
+      <img src="{{ p_img | relative_url }}" alt="" width="1200" height="630" loading="lazy" decoding="async">
+      {% else %}
+      <span class="row__ph" aria-hidden="true"><span>&gt;_ {{ p.categories.first | default: "post" }}</span></span>
+      {% endif %}
+    </span>
     <span class="row__main">
+      <span class="row__meta">
+        {% if p.categories.first %}<span class="chip chip--red">{{ p.categories.first }}</span>{% endif %}
+        <time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: '%b %-d, %Y' }}</time>
+        <span aria-hidden="true">·</span>
+        <span>{{ p_minutes }} min read</span>
+      </span>
       <span class="row__title">{{ p.title }}</span>
       {% if p.description %}<span class="row__desc">{{ p.description }}</span>{% endif %}
-    </span>
-    <span class="row__tags">
-      {% for c in p.categories %}<span class="chip{% if forloop.first %} chip--red{% endif %}">{{ c }}</span>{% endfor %}
     </span>
   </a>
 </li>
