@@ -25,15 +25,15 @@
     <rect y="30" width="560" height="14" fill="#0A0F1E" fill-opacity=".8"/>
     <circle cx="24" cy="22" r="6" fill="#E5243F"/>
     <circle cx="44" cy="22" r="6" fill="#25304D"/>
-    <circle cx="64" cy="22" r="6" fill="#25304D"/>
+    <circle cx="64" cy="22" r="6" fill="#2BD47D"/>
     <g font-family="JetBrains Mono, Consolas, monospace" font-size="20">
-      <text x="28" y="96" fill="#E5243F">$</text><text x="52" y="96" fill="#F4F6FA">cat scope.md</text>
+      <text x="28" y="96" fill="#2BD47D">$</text><text x="52" y="96" fill="#F4F6FA">cat scope.md</text>
       <text x="52" y="132" fill="#8C94A8">recon → exploit → root cause</text>
       <text x="52" y="164" fill="#8C94A8">→ mitigation</text>
-      <text x="28" y="220" fill="#E5243F">$</text><text x="52" y="220" fill="#F4F6FA">grep -c labs writeups/</text>
+      <text x="28" y="220" fill="#2BD47D">$</text><text x="52" y="220" fill="#F4F6FA">grep -c labs writeups/</text>
       <text x="52" y="256" fill="#8C94A8">18</text>
-      <text x="28" y="312" fill="#E5243F">$</text>
-      <rect x="52" y="294" width="12" height="24" fill="#E5243F"/>
+      <text x="28" y="312" fill="#2BD47D">$</text>
+      <rect x="52" y="294" width="12" height="24" fill="#2BD47D"/>
     </g>
   </g>
 
