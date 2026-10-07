@@ -1,13 +1,13 @@
 ---
 layout: page
 title: About
-description: I work on web application security and document my findings in technical write-ups.
+description: I work on cyber security and document my findings in technical write-ups.
 permalink: /about/
 ---
 
 <div class="prose" markdown="1">
 
-I'm **Bahadır Şahin**, and I work on web application security. I practice on hands-on security labs, and after each one I document on this blog how the vulnerability was found, why it was exploitable and how it could have been prevented.
+I'm **Bahadır Şahin**, and I work on cyber security. I practice on hands-on security labs, and after each one I document on this blog how the vulnerability was found, why it was exploitable and how it could have been prevented.
 
 > My goal is not just to show the solution, but to explain the mechanism behind the vulnerability and the defensive side as well.
 {: .note}

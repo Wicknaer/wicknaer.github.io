@@ -9,7 +9,7 @@ image:
   alt: "Terminal window summarising the write-up format: recon, exploit, root cause, mitigation"
 ---
 
-This blog documents my work on web application security. Posts are mostly lab write-ups from PortSwigger Web Security Academy, TryHackMe and HackTheBox, along with the technical notes that come out of them.
+This blog documents my work on cyber security. Posts are mostly lab write-ups from PortSwigger Web Security Academy, TryHackMe and HackTheBox, along with the technical notes that come out of them.
 
 ## Why write?
 
