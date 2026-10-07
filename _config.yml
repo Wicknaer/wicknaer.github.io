@@ -1,0 +1,37 @@
+
+title: "0xW1CK"
+handle: "Bahadır Şahin"                       
+author: "Bahadır Şahin"
+description: "Web güvenliği yolculuğu: Siber Güvenlik lab çözümleri, notlar ve öğrendiklerim."
+tagline: "Web security learner. Lab çöz, anla, yaz."
+
+url: "https://wicknaer.github.io"
+baseurl: ""
+
+lang: tr
+timezone: Europe/Istanbul
+
+social:
+  github: "https://github.com/wicknaer"
+  linkedin: "https://www.linkedin.com/in/bahadir06sahin"
+  tryhackme: "https://tryhackme.com/p/KULLANICIADI"
+  hackthebox: ""                         
+
+permalink: /blog/:title/
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  auto_ids: true
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - .preview

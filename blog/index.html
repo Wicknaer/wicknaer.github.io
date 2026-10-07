@@ -1,0 +1,33 @@
+---
+layout: page
+title: Yazılar
+description: Çözdüğüm lablar, yöntemlerim ve aldığım notlar. Konuya göre süz ya da ara.
+permalink: /blog/
+---
+<div class="filter">
+  <label class="filter__search">
+    <span class="sr-only">Yazılarda ara</span>
+    <span class="filter__ps" aria-hidden="true">grep -i</span>
+    <input type="search" id="q" placeholder="path traversal, burp, ssrf…" autocomplete="off">
+  </label>
+  <div class="filter__chips" role="group" aria-label="Kategoriye göre süz">
+    <button class="chip-btn" aria-pressed="true" data-cat="">Tümü <span>{{ site.posts | size }}</span></button>
+    {% assign cats = site.categories | sort %}
+    {% for c in cats %}
+    <button class="chip-btn" aria-pressed="false" data-cat="{{ c[0] | downcase }}">{{ c[0] }} <span>{{ c[1] | size }}</span></button>
+    {% endfor %}
+  </div>
+</div>
+
+{% assign years = site.posts | group_by_exp: "p", "p.date | date: '%Y'" %}
+{% for y in years %}
+<section class="year">
+  <h2 class="year__label">{{ y.name }}</h2>
+  <ol class="rows">
+    {% for post in y.items %}
+    {% include post-row.html post=post %}
+    {% endfor %}
+  </ol>
+</section>
+{% endfor %}
+<p class="rows__empty" id="no-results" hidden>Eşleşen yazı yok. Başka bir kelime dene ya da filtreyi kaldır.</p>

@@ -1,0 +1,16 @@
+<a class="skip" href="#main">İçeriğe geç</a>
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="{{ '/' | relative_url }}" aria-label="Ana sayfa">
+      <span class="nav__prompt">&gt;_</span>{{ site.title }}
+    </a>
+    <nav aria-label="Ana menü">
+      <ul class="nav__links">
+        {% assign path = page.url %}
+        <li><a href="{{ '/blog/' | relative_url }}" {% if path contains '/blog/' %}aria-current="page"{% endif %}>Yazılar</a></li>
+        <li><a href="{{ '/yol-haritasi/' | relative_url }}" {% if path == '/yol-haritasi/' %}aria-current="page"{% endif %}>Yol haritası</a></li>
+        <li><a href="{{ '/hakkimda/' | relative_url }}" {% if path == '/hakkimda/' %}aria-current="page"{% endif %}>Hakkımda</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>

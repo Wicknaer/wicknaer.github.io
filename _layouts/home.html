@@ -1,0 +1,78 @@
+---
+layout: default
+---
+<section class="hero">
+  <canvas class="hero__embers" aria-hidden="true"></canvas>
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <h1 class="hero__title">
+        <span class="hero__line">Kır.</span>
+        <span class="hero__line">Öğren.</span>
+        <span class="hero__line hero__line--outline">Yaz.</span>
+      </h1>
+      <p class="hero__lead">{{ site.description }}</p>
+      <div class="hero__actions">
+        <a class="btn btn--solid" href="{{ '/blog/' | relative_url }}">Yazıları oku</a>
+        <a class="btn btn--ghost" href="{{ '/yol-haritasi/' | relative_url }}">15 haftalık program</a>
+      </div>
+    </div>
+
+    <div class="term" role="img" aria-label="Son yazıları listeleyen terminal penceresi">
+      <div class="term__bar">
+        <span class="term__dot"></span><span class="term__dot"></span><span class="term__dot"></span>
+        <span class="term__title">{{ site.handle }}@web: ~/writeups</span>
+      </div>
+      <div class="term__body">
+        <p><span class="term__ps">$</span> whoami</p>
+        <p class="term__out">{{ site.tagline }}</p>
+        <p><span class="term__ps">$</span> ls -t ~/writeups | head -4</p>
+        {% for post in site.posts limit:4 %}
+        <p class="term__out"><a href="{{ post.url | relative_url }}"><span class="term__date">{{ post.date | date: '%d.%m' }}</span> {{ post.title }}</a></p>
+        {% else %}
+        <p class="term__out term__muted">henüz yazı yok, ilk lab yolda</p>
+        {% endfor %}
+        {% assign total = 0 %}{% assign done = 0 %}
+        {% for w in site.data.roadmap %}{% assign total = total | plus: w.total %}{% assign done = done | plus: w.done %}{% endfor %}
+        <p><span class="term__ps">$</span> ./progress --labs</p>
+        <p class="term__out">[{{ done }}/{{ total }}] çözüldü · {{ site.posts | size }} yazı yayında<span class="term__cursor"></span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <h2>Son yazılar</h2>
+      <a class="link-quiet" href="{{ '/blog/' | relative_url }}">Tümünü gör</a>
+    </div>
+    <ol class="rows">
+      {% for post in site.posts limit:6 %}
+      {% include post-row.html post=post %}
+      {% else %}
+      <li class="rows__empty">İlk writeup'ını <code>_posts/</code> klasörüne ekle, burada görünsün.</li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+{% assign current = site.data.roadmap | where_exp: "w", "w.done < w.total" | first %}
+{% if current %}
+<section class="section section--alt">
+  <div class="wrap now">
+    <div>
+      <h2>Bu hafta</h2>
+      <p class="now__week">Hafta {{ current.week }} · {{ current.platform }}</p>
+      <p class="now__title">{{ current.title }}</p>
+    </div>
+    <div class="now__progress">
+      {% assign pct = current.done | times: 100 | divided_by: current.total %}
+      <div class="meter" role="progressbar" aria-valuenow="{{ current.done }}" aria-valuemin="0" aria-valuemax="{{ current.total }}" aria-label="Hafta {{ current.week }} ilerlemesi">
+        <span style="width: {{ pct }}%"></span>
+      </div>
+      <p class="now__count"><strong>{{ current.done }}</strong> / {{ current.total }} lab</p>
+      <a class="link-quiet" href="{{ '/yol-haritasi/' | relative_url }}">Yol haritasını aç</a>
+    </div>
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,13 @@
+{% assign p = include.post %}
+<li class="row" data-title="{{ p.title | downcase | escape }} {{ p.tags | join: ' ' | downcase }}" data-cats="{{ p.categories | join: '|' | downcase }}">
+  <a class="row__link" href="{{ p.url | relative_url }}">
+    <time class="row__date" datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: '%d.%m.%Y' }}</time>
+    <span class="row__main">
+      <span class="row__title">{{ p.title }}</span>
+      {% if p.description %}<span class="row__desc">{{ p.description }}</span>{% endif %}
+    </span>
+    <span class="row__tags">
+      {% for c in p.categories %}<span class="chip{% if forloop.first %} chip--red{% endif %}">{{ c }}</span>{% endfor %}
+    </span>
+  </a>
+</li>

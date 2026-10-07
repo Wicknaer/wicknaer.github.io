@@ -1,0 +1,47 @@
+---
+layout: default
+---
+{% assign words = content | number_of_words %}
+{% assign minutes = words | divided_by: 180 | plus: 1 %}
+<article class="post">
+  <header class="post__head">
+    <div class="wrap wrap--post">
+      <p class="post__crumb">
+        <a href="{{ '/blog/' | relative_url }}">Yazılar</a>
+        {% for c in page.categories %}<span class="chip{% if forloop.first %} chip--red{% endif %}">{{ c }}</span>{% endfor %}
+      </p>
+      <h1 class="post__title">{{ page.title }}</h1>
+      {% if page.description %}<p class="post__lead">{{ page.description }}</p>{% endif %}
+      <dl class="post__meta">
+        <div><dt>Tarih</dt><dd><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%d.%m.%Y' }}</time></dd></div>
+        <div><dt>Okuma</dt><dd>{{ minutes }} dk</dd></div>
+        {% if page.platform %}<div><dt>Platform</dt><dd>{{ page.platform }}</dd></div>{% endif %}
+        {% if page.difficulty %}<div><dt>Seviye</dt><dd class="lvl lvl--{{ page.difficulty | downcase }}">{{ page.difficulty }}</dd></div>{% endif %}
+      </dl>
+    </div>
+  </header>
+
+  <div class="wrap wrap--post post__grid">
+    <aside class="toc" aria-label="İçindekiler">
+      <p class="toc__title">İçindekiler</p>
+      <ol class="toc__list"></ol>
+    </aside>
+    <div class="prose">
+      {{ content }}
+    </div>
+  </div>
+
+  <footer class="wrap wrap--post post__foot">
+    {% if page.tags.size > 0 %}
+    <p class="post__tags">{% for t in page.tags %}<span class="tag">#{{ t }}</span>{% endfor %}</p>
+    {% endif %}
+    <nav class="pager" aria-label="Diğer yazılar">
+      {% if page.previous %}
+      <a class="pager__item" href="{{ page.previous.url | relative_url }}"><span>Önceki</span>{{ page.previous.title }}</a>
+      {% else %}<span></span>{% endif %}
+      {% if page.next %}
+      <a class="pager__item pager__item--next" href="{{ page.next.url | relative_url }}"><span>Sonraki</span>{{ page.next.title }}</a>
+      {% endif %}
+    </nav>
+  </footer>
+</article>
