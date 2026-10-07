@@ -454,3 +454,6 @@ a.chip:hover { color: var(--white); border-color: var(--red); }
 .notfound__term { margin: 0 0 36px; font: .92rem/1.7 var(--f-mono); color: var(--steel); }
 .notfound__term > span:first-child { color: var(--red); margin-right: 8px; }
 .notfound__path { color: var(--white); overflow-wrap: anywhere; }
+/* Henüz yazısı olmayan kategoriler soluk görünür ama tıklanabilir */
+.chip-btn.is-empty:not([aria-pressed="true"]) { opacity: .55; }
+.chip-btn.is-empty:hover { opacity: 1; }

@@ -1,0 +1,10 @@
+# Posts sayfasındaki kategori filtreleri (sırasıyla gösterilir).
+# Yazının front matter'ındaki "categories" değeri buradaki "name" ile birebir aynı olmalı.
+- name: Web Security
+- name: Network Security
+- name: Cloud Security
+- name: Malware Analysis
+- name: Digital Forensics
+- name: Cryptography
+- name: OSINT
+- name: Red Teaming

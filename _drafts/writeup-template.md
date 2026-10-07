@@ -5,8 +5,8 @@
 title: "PortSwigger | OS command injection (5 labs)"
 description: "One-sentence summary: what will the reader learn from this post?"
 date: 2026-10-10 20:00:00 +0300
-categories: [PortSwigger, OS Command Injection]   # ilki ana kategori (kırmızı etiket)
-tags: [burp-suite, command-injection]
+categories: [Web Security]                        # _data/categories.yml içindeki alanlardan biri
+tags: [portswigger, os-command-injection, burp-suite]
 image:                                             # kapak görseli: kartlarda, yazının üstünde ve paylaşım önizlemesinde görünür
   path: /assets/img/posts/os-command-injection/cover.png   # önerilen boyut 1200x630 (PNG/JPG; LinkedIn SVG önizlemesi göstermez)
   alt: "Short description of the cover image"

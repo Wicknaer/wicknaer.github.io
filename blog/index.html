@@ -13,9 +13,9 @@ permalink: /blog/
   </label>
   <div class="filter__chips" role="group" aria-label="Filter by category">
     <button class="chip-btn" aria-pressed="true" data-cat="">All <span>{{ site.posts | size }}</span></button>
-    {% assign cats = site.categories | sort %}
-    {% for c in cats %}
-    <button class="chip-btn" aria-pressed="false" data-cat="{{ c[0] | downcase }}">{{ c[0] }} <span>{{ c[1] | size }}</span></button>
+    {% for c in site.data.categories %}
+    {% assign n = site.categories[c.name] | size %}
+    <button class="chip-btn{% if n == 0 %} is-empty{% endif %}" aria-pressed="false" data-cat="{{ c.name | downcase }}">{{ c.name }} <span>{{ n }}</span></button>
     {% endfor %}
   </div>
 </div>

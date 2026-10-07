@@ -418,7 +418,13 @@
       document.querySelectorAll(".year").forEach(function (y) {
         y.hidden = !y.querySelector(".row:not([hidden])");
       });
-      if (empty) empty.hidden = shown !== 0;
+      if (empty) {
+        empty.hidden = shown !== 0;
+        if (!empty.dataset.msg) empty.dataset.msg = empty.textContent;
+        var active = document.querySelector(".chip-btn[aria-pressed=\"true\"]");
+        var label = active && active.firstChild ? active.firstChild.textContent.trim() : "";
+        empty.textContent = cat && !term ? "No posts in " + label + " yet." : empty.dataset.msg;
+      }
     }
     if (q) q.addEventListener("input", apply);
     // "/" ile aramaya odaklan, Esc ile temizle

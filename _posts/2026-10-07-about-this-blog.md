@@ -2,7 +2,7 @@
 title: "About this blog: scope and post format"
 description: "What this blog covers, the structure every write-up follows, and the formatting conventions used in posts."
 date: 2026-10-07 20:00:00 +0300
-categories: [Blog]
+categories: [Web Security]
 tags: [blog, methodology]
 image:
   path: /assets/img/posts/about-this-blog/cover.svg
