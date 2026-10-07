@@ -15,7 +15,7 @@ permalink: /blog/
     <button class="chip-btn" aria-pressed="true" data-cat="">All <span>{{ site.posts | size }}</span></button>
     {% for c in site.data.categories %}
     {% assign n = site.categories[c.name] | size %}
-    <button class="chip-btn{% if n == 0 %} is-empty{% endif %}" aria-pressed="false" data-cat="{{ c.name | downcase }}">{{ c.name }} <span>{{ n }}</span></button>
+    <button class="chip-btn chip-btn--cat{% if n == 0 %} is-empty{% endif %}" style="--cat: {{ c.color }}" aria-pressed="false" data-cat="{{ c.name | downcase }}">{{ c.name }} <span>{{ n }}</span></button>
     {% endfor %}
   </div>
 </div>

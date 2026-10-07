@@ -206,7 +206,7 @@ code, kbd, pre { font-family: var(--f-mono); }
 
 /* ---------- Bölümler ---------- */
 .section { padding: clamp(56px, 8vw, 96px) 0; }
-.section__head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 20px; }
+.section__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 20px; }
 .section__head h2 { font-size: var(--step-3); margin: 0; }
 
 /* Yazı kartları: solda kapak görseli, sağda özet */
@@ -218,7 +218,7 @@ code, kbd, pre { font-family: var(--f-mono); }
   border: 1px solid var(--line); border-radius: var(--r-m);
   transition: border-color .2s, background .2s, transform .2s;
 }
-.row__link:hover { color: inherit; border-color: color-mix(in srgb, var(--red) 60%, var(--line)); background: var(--navy); }
+.row__link:hover { color: inherit; border-color: color-mix(in srgb, var(--cat, var(--red)) 60%, var(--line)); background: var(--navy); box-shadow: 0 18px 50px -30px color-mix(in srgb, var(--cat, var(--red)) 60%, transparent); }
 .row__thumb { display: block; position: relative; aspect-ratio: 1200 / 630; overflow: hidden; border-radius: calc(var(--r-m) - 4px); background: var(--abyss); border: 1px solid var(--line); }
 .row__thumb img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .4s cubic-bezier(.2,.7,.2,1); }
 .row__link:hover .row__thumb img { transform: scale(1.04); }
@@ -460,3 +460,80 @@ a.chip:hover { color: var(--white); border-color: var(--red); }
 /* Henüz yazısı olmayan kategoriler soluk görünür ama tıklanabilir */
 .chip-btn.is-empty:not([aria-pressed="true"]) { opacity: .55; }
 .chip-btn.is-empty:hover { opacity: 1; }
+
+/* ---------- Renk katmanı: alan renkleri, başlık yolları, profil ---------- */
+
+/* Başlıkların üstündeki terminal yolu (~/posts gibi) */
+.eyebrow { margin: 0 0 10px; font: 600 .82rem var(--f-mono); color: var(--green); letter-spacing: .02em; }
+.eyebrow::before { content: "❯ "; color: color-mix(in srgb, var(--green) 55%, transparent); }
+
+/* Alan rengini taşıyan etiket */
+.chip--cat { border-color: color-mix(in srgb, var(--cat, var(--red)) 55%, transparent); color: var(--cat, var(--red)); background: color-mix(in srgb, var(--cat, var(--red)) 10%, transparent); }
+a.chip--cat:hover { color: var(--white); border-color: var(--cat); background: color-mix(in srgb, var(--cat) 22%, transparent); }
+
+/* Posts filtreleri: renk noktası + seçiliyken alan rengi */
+.chip-btn--cat::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 8px; vertical-align: 1px; background: var(--cat); transform: rotate(45deg); }
+.chip-btn--cat:hover { border-color: color-mix(in srgb, var(--cat) 70%, transparent); }
+.chip-btn--cat[aria-pressed="true"] { background: color-mix(in srgb, var(--cat) 18%, transparent); border-color: var(--cat); color: var(--white); }
+
+/* Ana sayfa: alan kartları */
+.section--domains { padding-top: 0; }
+.domains { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.domain {
+  position: relative; display: flex; flex-direction: column; gap: 6px; height: 100%;
+  padding: 20px 20px 18px; text-decoration: none; overflow: hidden;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--cat) 9%, var(--navy)) 0%, color-mix(in srgb, var(--navy) 60%, transparent) 70%);
+  border: 1px solid var(--line); border-radius: var(--r-m);
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+.domain::before { content: ""; position: absolute; left: 0; top: 0; right: 0; height: 3px; background: var(--cat); opacity: .85; }
+.domain__code { font: 600 .8rem var(--f-mono); color: var(--cat); }
+.domain__name { font: 600 1.15rem/1.25 var(--f-display); color: var(--white); }
+.domain__count { margin-top: auto; padding-top: 10px; font: .78rem var(--f-mono); color: var(--steel); }
+.domain:hover { border-color: color-mix(in srgb, var(--cat) 70%, var(--line)); transform: translateY(-2px); box-shadow: 0 20px 40px -28px var(--cat); }
+.domain:hover .domain__name { color: var(--cat); }
+.domain.is-empty .domain__count { color: color-mix(in srgb, var(--steel) 70%, transparent); }
+
+/* About Me: solda profil kartı, sağda metin */
+.about { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 56px; align-items: start; }
+.profile {
+  position: sticky; top: 96px; padding: 28px 24px 24px; text-align: center;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--red) 8%, var(--navy)) 0%, var(--navy) 60%);
+  border: 1px solid var(--line); border-radius: var(--r-m);
+}
+.profile__badge {
+  width: 96px; height: 96px; margin: 0 auto 18px; display: grid; place-items: center;
+  font: 700 2rem var(--f-display); color: var(--white); letter-spacing: .02em;
+  background: linear-gradient(135deg, var(--red) 0%, var(--wine) 100%);
+  clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.08);
+}
+.profile__name { margin: 0; font: 600 1.25rem var(--f-display); color: var(--white); }
+.profile__role { margin: 6px 0 20px; font: .82rem/1.5 var(--f-mono); color: var(--green); }
+.profile__cta { width: 100%; justify-content: center; }
+
+/* Kod bloklarında dile göre etiket rengi */
+.code-lang[data-lang="http"] { color: #60A5FA; }
+.code-lang[data-lang="bash"], .code-lang[data-lang="shell"], .code-lang[data-lang="sh"], .code-lang[data-lang="console"] { color: var(--green); }
+.code-lang[data-lang="python"] { color: #FBBF24; }
+.code-lang[data-lang="sql"] { color: #22D3EE; }
+.code-lang[data-lang="javascript"], .code-lang[data-lang="js"] { color: #FDE047; }
+.code-lang[data-lang="php"] { color: #A5B4FC; }
+.code-lang[data-lang="html"], .code-lang[data-lang="xml"] { color: #FB923C; }
+
+/* Temaya uygun kaydırma çubuğu */
+html { scrollbar-color: #2b3656 var(--abyss); }
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--abyss); }
+::-webkit-scrollbar-thumb { background: #2b3656; border: 3px solid var(--abyss); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: var(--red); }
+
+@media (max-width: 960px) {
+  .domains { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about { grid-template-columns: 1fr; gap: 32px; }
+  .profile { position: static; max-width: 420px; }
+}
+@media (max-width: 420px) {
+  .domain { padding: 16px; }
+  .domain__name { font-size: 1rem; }
+}

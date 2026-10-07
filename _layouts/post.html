@@ -9,7 +9,7 @@ layout: default
     <div class="wrap wrap--post">
       <p class="post__crumb">
         <a href="{{ '/blog/' | relative_url }}">Posts</a>
-        {% for c in page.categories %}<a class="chip{% if forloop.first %} chip--red{% endif %}" href="{{ '/blog/' | relative_url }}?cat={{ c | downcase | uri_escape }}">{{ c }}</a>{% endfor %}
+        {% for c in page.categories %}<a class="chip chip--cat" style="--cat: {% include cat-color.html name=c %}" href="{{ '/blog/' | relative_url }}?cat={{ c | downcase | uri_escape }}">{{ c }}</a>{% endfor %}
       </p>
       <h1 class="post__title">{{ page.title }}</h1>
       {% if page.description %}<p class="post__lead">{{ page.description }}</p>{% endif %}

@@ -75,7 +75,10 @@ layout: default
 <section class="section">
   <div class="wrap">
     <div class="section__head">
-      <h2>Latest posts</h2>
+      <div>
+        <p class="eyebrow">~/posts --latest</p>
+        <h2>Latest posts</h2>
+      </div>
       <a class="link-quiet" href="{{ '/blog/' | relative_url }}">View all</a>
     </div>
     <ol class="rows">
@@ -85,5 +88,29 @@ layout: default
       <li class="rows__empty">No posts published yet.</li>
       {% endfor %}
     </ol>
+  </div>
+</section>
+
+<section class="section section--domains">
+  <div class="wrap">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">~/domains</p>
+        <h2>Explore by domain</h2>
+      </div>
+      <a class="link-quiet" href="{{ '/blog/' | relative_url }}">All posts</a>
+    </div>
+    <ul class="domains">
+      {% for c in site.data.categories %}
+      {% assign n = site.categories[c.name] | size %}
+      <li>
+        <a class="domain{% if n == 0 %} is-empty{% endif %}" style="--cat: {{ c.color }}" href="{{ '/blog/' | relative_url }}?cat={{ c.name | downcase | uri_escape }}">
+          <span class="domain__code">~/{{ c.code }}</span>
+          <span class="domain__name">{{ c.name }}</span>
+          <span class="domain__count">{% if n == 0 %}Coming soon{% elsif n == 1 %}1 post{% else %}{{ n }} posts{% endif %}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 </section>

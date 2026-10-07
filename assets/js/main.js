@@ -270,6 +270,7 @@
     if (m && m[1] !== "plaintext") {
       var lang = document.createElement("span");
       lang.className = "code-lang";
+      lang.setAttribute("data-lang", m[1]);
       lang.textContent = m[1];
       block.appendChild(lang);
     }

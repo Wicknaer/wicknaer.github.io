@@ -1,0 +1,3 @@
+{%- comment -%} Verilen kategori adının rengini döndürür (listede yoksa marka kırmızısı). {%- endcomment -%}
+{%- assign _c = site.data.categories | where: "name", include.name | first -%}
+{{- _c.color | default: "#FF4D63" -}}

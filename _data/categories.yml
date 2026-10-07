@@ -1,10 +1,27 @@
-# Posts sayfasındaki kategori filtreleri (sırasıyla gösterilir).
+# Posts sayfasındaki kategori filtreleri ve ana sayfadaki "Explore by domain" kartları (sırasıyla gösterilir).
 # Yazının front matter'ındaki "categories" değeri buradaki "name" ile birebir aynı olmalı.
+# code: kartta görünen kısa yol (~/web gibi), color: alanın vurgu rengi.
 - name: Web Security
+  code: web
+  color: "#FF4D63"
 - name: Network Security
+  code: net
+  color: "#60A5FA"
 - name: Cloud Security
+  code: cloud
+  color: "#22D3EE"
 - name: Malware Analysis
+  code: malware
+  color: "#FBBF24"
 - name: Digital Forensics
+  code: dfir
+  color: "#C084FC"
 - name: Cryptography
+  code: crypto
+  color: "#2BD47D"
 - name: OSINT
+  code: osint
+  color: "#F472B6"
 - name: Red Teaming
+  code: redteam
+  color: "#FB923C"
