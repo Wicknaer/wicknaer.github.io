@@ -39,7 +39,7 @@
 
   <!-- başlık -->
   <g font-family="Chakra Petch, Segoe UI, sans-serif" font-weight="700">
-    <text x="80" y="250" font-size="30" fill="#FF4D63" font-family="JetBrains Mono, Consolas, monospace" font-weight="600">&gt;_ 0xW1CK</text>
+    <text x="80" y="250" font-size="30" fill="#FF4D63" font-family="JetBrains Mono, Consolas, monospace" font-weight="600">&gt;_ 0xWICKNAER</text>
     <text x="80" y="330" font-size="64" fill="#F4F6FA">About</text>
     <text x="80" y="400" font-size="64" fill="#F4F6FA">this blog</text>
     <rect x="80" y="430" width="120" height="5" fill="#E5243F"/>

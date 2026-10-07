@@ -20,7 +20,7 @@ layout: default
     <div class="term" data-term>
       <div class="term__bar">
         <span class="term__dot"></span><span class="term__dot"></span><span class="term__dot"></span>
-        <span class="term__title">guest@{{ site.title | downcase }}: ~</span>
+        <span class="term__title">guest@{{ site.title | downcase | remove_first: "0x" }}: ~</span>
       </div>
       <div class="term__grid">
         <div class="term__main">
