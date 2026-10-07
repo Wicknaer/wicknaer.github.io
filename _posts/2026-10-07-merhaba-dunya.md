@@ -1,6 +1,6 @@
 ---
-title: "Merhaba dünya: bu blog neden var?"
-description: "15 haftalık web güvenliği programına başlarken neden yazdığımı ve yazıların nasıl bir düzende ilerleyeceğini anlatıyorum."
+title: "Merhaba, bu blog neden var?"
+description: "Web güvenliği çalışmalarına başlarken neden yazdığımı ve yazıların nasıl bir düzende ilerleyeceğini anlatıyorum."
 date: 2026-10-07 20:00:00 +0300
 categories: [Günlük]
 tags: [başlangıç, plan]
