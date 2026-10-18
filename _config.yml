@@ -4,6 +4,7 @@ handle: "Bahadır Şahin"
 author: "Bahadır Şahin"
 description: "Lab writeups, vulnerability analyses and technical notes on cyber security."
 tagline: "Cyber security · writeups & research notes"
+role: "Computer Engineering Student | Security Researcher | AppSec | DevSecOps"   # Terminal whoami + About kartındaki ünvan satırı
 
 url: "https://wicknaer.github.io"
 baseurl: ""

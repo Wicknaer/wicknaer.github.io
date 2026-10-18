@@ -27,7 +27,7 @@ layout: default
           <div class="term__body" role="log" aria-live="polite" aria-label="Terminal output">
             <!-- JavaScript kapalıysa görünen sabit çıktı -->
             <p><span class="term__ps">$</span> whoami</p>
-            <p class="term__out">{{ site.tagline }}</p>
+            <p class="term__out">{{ site.role }}</p>
             <p><span class="term__ps">$</span> ls ~/writeups</p>
             {% for post in site.posts limit:4 %}
             <p class="term__out"><a href="{{ post.url | relative_url }}"><span class="term__date">{{ post.date | date: '%b %-d' }}</span> {{ post.title }}</a></p>
@@ -57,6 +57,7 @@ layout: default
         {
           "name": {{ site.author | jsonify }},
           "tagline": {{ site.tagline | jsonify }},
+          "role": {{ site.role | jsonify }},
           "description": {{ site.description | jsonify }},
           "posts": [{% for post in site.posts %}
             {"title": {{ post.title | jsonify }}, "url": {{ post.url | relative_url | jsonify }}, "date": {{ post.date | date: '%b %-d, %Y' | jsonify }}, "cats": {{ post.categories | jsonify }}, "tags": {{ post.tags | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}

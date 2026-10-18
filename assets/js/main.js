@@ -298,7 +298,7 @@
       },
       whoami: {
         desc: "Short intro",
-        run: function () { say(hl(D.name)); say(D.tagline); }
+        run: function () { say(hl(D.name)); say(D.role); }
       },
       ls: {
         desc: "List published posts",

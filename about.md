@@ -10,7 +10,7 @@ permalink: /about/
 <aside class="profile" aria-label="Profile">
   <div class="profile__badge" aria-hidden="true">BŞ</div>
   <p class="profile__name">{{ site.author }}</p>
-  <p class="profile__role">{{ site.tagline }}</p>
+  <p class="profile__role">{{ site.role }}</p>
   {% if site.social.linkedin and site.social.linkedin != "" %}
   <a class="btn btn--ghost profile__cta" href="{{ site.social.linkedin }}" target="_blank" rel="me noopener">LinkedIn <span class="btn__arrow" aria-hidden="true">→</span></a>
   {% endif %}
