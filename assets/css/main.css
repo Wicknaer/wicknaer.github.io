@@ -277,6 +277,7 @@ code, kbd, pre { font-family: var(--f-mono); }
 .post__cover { margin: 40px 0 0; aspect-ratio: 1200 / 630; overflow: hidden; border: 1px solid var(--line); border-radius: var(--r-m); background: var(--abyss); box-shadow: 0 30px 80px -40px rgba(0,0,0,.9); }
 .post__cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .post__meta dd { margin: 2px 0 0; font-family: var(--f-mono); color: var(--white); font-size: .92rem; }
+.row__meta .lvl { font-weight: 600; letter-spacing: .02em; }
 .lvl--apprentice { color: var(--green) !important; }
 .lvl--practitioner { color: #fbbf24 !important; }
 .lvl--expert { color: var(--red-hi) !important; }

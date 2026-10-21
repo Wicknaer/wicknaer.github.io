@@ -16,6 +16,10 @@
         <time datetime="{{ p.date | date_to_xmlschema }}">{{ p.date | date: '%b %-d, %Y' }}</time>
         <span aria-hidden="true">·</span>
         <span>{{ p_minutes }} min read</span>
+        {% if p.difficulty %}
+        <span aria-hidden="true">·</span>
+        <span class="lvl lvl--{{ p.difficulty | downcase }}">{{ p.difficulty }}</span>
+        {% endif %}
       </span>
       <span class="row__title">{{ p.title }}</span>
       {% if p.description %}<span class="row__desc">{{ p.description }}</span>{% endif %}
