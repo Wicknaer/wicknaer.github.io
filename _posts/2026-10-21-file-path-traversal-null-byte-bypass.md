@@ -11,10 +11,10 @@ description: "PortSwigger's path traversal lab where the filename must end in .j
 date: 2026-10-21 15:00:00 +0300                  # Yayın tarihi (ileri tarih verirsen yazı yayınlanmaz)
 
 categories: [Web Security]                       # _data/categories.yml içindeki alanlardan biri (renk buradan gelir)
-tags: [portswigger, path-traversal, burp-suite, null-byte, apprentice]   # Serbest etiketler (küçük harf, boşluksuz)
+tags: [portswigger, path-traversal, burp-suite, null-byte, practitioner]   # Serbest etiketler (küçük harf, boşluksuz)
 
 platform: PortSwigger Web Security Academy       # Üst bilgide "Platform" olarak görünür
-difficulty: Apprentice                           # Apprentice / Practitioner / Expert (renkli seviye rozeti)
+difficulty: Practitioner                        # Apprentice / Practitioner / Expert (renkli seviye rozeti)
 
 # --- Kapak görseli ---------------------------------------------------------
 # Tüm path traversal yazıları aynı kategori kapağını paylaşır.
