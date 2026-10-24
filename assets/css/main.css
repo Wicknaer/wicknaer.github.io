@@ -130,7 +130,7 @@ code, kbd, pre { font-family: var(--f-mono); }
 .hero__inner {
   max-width: var(--wrap); margin: 0 auto;
   padding: clamp(56px, 10vw, 120px) var(--gutter) clamp(56px, 9vw, 110px);
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: clamp(32px, 5vw, 64px); align-items: center;
+  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(44px, 7vw, 104px); align-items: center;
 }
 .hero__title { margin: 0 0 28px; font-size: var(--step-5); font-weight: 700; line-height: 1.02; letter-spacing: -0.02em; text-transform: uppercase; }
 .hero__line { display: block; }
