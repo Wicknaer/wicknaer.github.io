@@ -76,9 +76,9 @@ As always, start by confirming the column count and that both columns accept tex
 ' UNION SELECT 'abc','def'--
 ```
 
-![Two text columns confirmed](/posts/images/sqli-contents-columns.png "' UNION SELECT 'abc','def'-- returns abc and def — two text columns")
-
 ![The columns payload in Burp](/posts/images/sqli-contents-columns-burp.webp "The abc/def payload URL-encoded in the category parameter")
+
+![Two text columns confirmed](/posts/images/sqli-contents-columns.png "' UNION SELECT 'abc','def'-- returns abc and def — two text columns")
 
 ### Step 2 — find the users table
 
@@ -105,9 +105,9 @@ Now ask `information_schema.columns` for the columns of *that* specific table, f
 
 The table has three columns — and the username/password ones also carry random suffixes:
 
-![The column names for the users table](/posts/images/sqli-contents-columnnames.png "The columns are email, username_fodrgr and password_oeciar")
-
 ![The column-name payload in Burp](/posts/images/sqli-contents-columnnames-burp.webp "Querying information_schema.columns filtered to the users table")
+
+![The column names for the users table](/posts/images/sqli-contents-columnnames.png "The columns are email, username_fodrgr and password_oeciar")
 
 ### Step 4 — dump the credentials
 
@@ -119,9 +119,9 @@ We now know the table and the exact column names. Select the username and passwo
 
 Every user's credentials come back in the output, administrator included:
 
-![The dumped usernames and passwords](/posts/images/sqli-contents-creds.png "administrator, wiener and carlos with their plaintext passwords")
-
 ![The credential-dump payload in Burp](/posts/images/sqli-contents-creds-burp.webp "Selecting the real username and password columns from the users table")
+
+![The dumped usernames and passwords](/posts/images/sqli-contents-creds.png "administrator, wiener and carlos with their plaintext passwords")
 
 ### Step 5 — log in
 

@@ -68,9 +68,9 @@ The query returns two columns, so first find which one takes text. Put `NULL` in
 
 The marker appears, so the **second** column is the text column — and the first one isn't, which is the whole challenge here:
 
-![The second column holds text](/posts/images/sqli-multi-textcol.png "' UNION SELECT NULL,'abc'-- shows abc — only the second column accepts text")
-
 ![The text-column probe in Burp](/posts/images/sqli-multi-textcol-burp.png "Putting the marker in the second column while the first stays NULL")
+
+![The second column holds text](/posts/images/sqli-multi-textcol.png "' UNION SELECT NULL,'abc'-- shows abc — only the second column accepts text")
 
 ### Step 2 — concatenate both values into that column
 
@@ -82,9 +82,9 @@ We need two fields but have one text slot, so we join `username` and `password` 
 
 Each row now prints as `username~password`, administrator included:
 
-![The concatenated credentials](/posts/images/sqli-multi-creds.png "Each row shows username then a tilde then password, for wiener, carlos and administrator")
-
 ![The concatenation payload in Burp](/posts/images/sqli-multi-creds-burp.png "Joining username and password into the single text column with a tilde separator")
+
+![The concatenated credentials](/posts/images/sqli-multi-creds.png "Each row shows username then a tilde then password, for wiener, carlos and administrator")
 
 > The `~` is just a separator that won't appear inside a username or password, so the two halves stay unambiguous. Any character you know isn't in the data works; a colon or a space would do just as well.
 {: .tip}

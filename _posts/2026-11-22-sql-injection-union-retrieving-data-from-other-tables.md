@@ -66,9 +66,9 @@ Catch the `GET /filter?category=...` request in **Proxy > Intercept** and confir
 ' UNION SELECT 'abc','def'--
 ```
 
-![Two text columns confirmed](/posts/images/sqli-ot-columns.png "' UNION SELECT 'abc','def'-- returns abc and def — two text columns")
-
 ![The columns payload in Burp](/posts/images/sqli-ot-columns-burp.png "The abc/def payload URL-encoded in the category parameter")
+
+![Two text columns confirmed](/posts/images/sqli-ot-columns.png "' UNION SELECT 'abc','def'-- returns abc and def — two text columns")
 
 ### Step 2 — read the users table
 
@@ -80,9 +80,9 @@ Two text columns is exactly what we need to print a username and password side b
 
 Every user's credentials come back in the output — including `administrator`:
 
-![The dumped usernames and passwords](/posts/images/sqli-ot-creds.png "wiener, carlos and administrator with their plaintext passwords")
-
 ![The credential-dump payload in Burp](/posts/images/sqli-ot-creds-burp.png "Selecting username and password from the users table")
+
+![The dumped usernames and passwords](/posts/images/sqli-ot-creds.png "wiener, carlos and administrator with their plaintext passwords")
 
 > Because the query had exactly two text columns, the username and password map straight onto them. If the shapes didn't line up — say a three-column query — you'd pad the UNION with `NULL` (e.g. `SELECT username, password, NULL`) to match.
 {: .tip}

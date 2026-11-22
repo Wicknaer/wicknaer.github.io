@@ -76,9 +76,9 @@ Confirm the column count and that both columns accept text. On Oracle, selecting
 ' UNION SELECT 'abc','def' FROM dual--
 ```
 
-![Two text columns confirmed](/posts/images/sqli-ocontents-columns.png "' UNION SELECT 'abc','def' FROM dual-- returns abc and def — two text columns")
-
 ![The columns payload in Burp](/posts/images/sqli-ocontents-columns-burp.webp "The abc/def payload URL-encoded in the category parameter")
+
+![Two text columns confirmed](/posts/images/sqli-ocontents-columns.png "' UNION SELECT 'abc','def' FROM dual-- returns abc and def — two text columns")
 
 ### Step 2 — find the users table
 
@@ -90,11 +90,11 @@ Ask `all_tables` for every table name. Put the name in the first column and pad 
 
 The output is full of Oracle's built-in tables, but scanning down we find the randomised credentials table — `USERS_KLVGQF`:
 
+![The table-enumeration payload in Burp](/posts/images/sqli-ocontents-tables-burp.webp "Querying all_tables through the category parameter")
+
 ![The table list from all_tables](/posts/images/sqli-ocontents-tables.png "' UNION SELECT table_name, NULL FROM all_tables-- lists every table")
 
 ![The users table found in the list](/posts/images/sqli-ocontents-tables-found.png "USERS_KLVGQF stands out among the Oracle system tables")
-
-![The table-enumeration payload in Burp](/posts/images/sqli-ocontents-tables-burp.webp "Querying all_tables through the category parameter")
 
 > On Oracle, table and column names come back **uppercase**, so the `WHERE` filter in the next step must match the exact case: `table_name='USERS_KLVGQF'`, not lowercase.
 {: .note}
@@ -109,9 +109,9 @@ Now ask `all_tab_columns` for the columns of that specific table:
 
 Three columns come back — the username and password ones carry random suffixes too:
 
-![The column names for the users table](/posts/images/sqli-ocontents-columnnames.png "The columns are EMAIL, PASSWORD_QFOBRA and USERNAME_MACHOU")
-
 ![The column-name payload in Burp](/posts/images/sqli-ocontents-columnnames-burp.webp "Querying all_tab_columns filtered to USERS_KLVGQF")
+
+![The column names for the users table](/posts/images/sqli-ocontents-columnnames.png "The columns are EMAIL, PASSWORD_QFOBRA and USERNAME_MACHOU")
 
 ### Step 4 — dump the credentials
 
@@ -123,9 +123,9 @@ We know the table and the exact column names. Select the username and password c
 
 Every user's credentials come back, administrator included:
 
-![The dumped usernames and passwords](/posts/images/sqli-ocontents-creds.png "administrator, carlos and wiener with their plaintext passwords")
-
 ![The credential-dump payload in Burp](/posts/images/sqli-ocontents-creds-burp.webp "Selecting the real username and password columns from USERS_KLVGQF")
+
+![The dumped usernames and passwords](/posts/images/sqli-ocontents-creds.png "administrator, carlos and wiener with their plaintext passwords")
 
 ### Step 5 — log in
 
